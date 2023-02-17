@@ -1,0 +1,10 @@
+id;code;description
+1;COP;Conditions physiques
+2;CEB;Couverture du sol, écosystèmes et biodiversité
+3;QEN;Qualité de l'environnement
+5;PEC;Phénomènes naturels extrêmes et catastrophes naturelles
+6;CAT;Catastrophes technologiques
+8;DPE;Dépenses de protection de l'environnement et de gestion des ressources
+9;GRE;Gouvernance et réglementation environnementale
+10;PEG;Préparation aux événements extrêmes et gestion des catastrophes
+11;ISE;Information et sensibilisation à l'environnement

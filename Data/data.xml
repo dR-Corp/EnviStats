@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE indicateurs SYSTEM "data.dtd"> -->
+<indicateurs>
+    <categorie id="1" code="COP" description="Conditions physiques">
+        <sous-categorie id="1" code="COP_ACM" locale="N" description="Atmosphère, climat et conditions météorologiques">
+			<indicateur id="1" code="COP_ACM_TMPMM" locale="N" description="Température Moyenne mensuelle">
+				<donnee id="1" frequence="A" zone_reference="banikanni" unite_mesure="kg">
+					<valeurs annee="2019">12</valeurs>
+					<valeurs annee="2020">13</valeurs>
+					<valeurs annee="2021">15</valeurs>
+				</donnee>
+			<donnee id="3" frequence="B" zone_reference="zongo" unite_mesure="kg"><valeurs annee="2019">40</valeurs><valeurs annee="2020">20</valeurs><valeurs annee="2021">19</valeurs></donnee><donnee id="3" frequence="D" zone_reference="wore" unite_mesure="kg"><valeurs annee="2019">10</valeurs><valeurs annee="2020">14</valeurs><valeurs annee="2021">9</valeurs></donnee></indicateur>
+			<indicateur id="2" code="COP_ACM_TMPMIN" locale="N" description="Température moyenne minimale">
+				<donnee id="2" frequence="B" zone_reference="zongo" unite_mesure="kg">
+					<valeurs annee="2019">22</valeurs>
+					<valeurs annee="2020">19</valeurs>
+					<valeurs annee="2021">42</valeurs>
+				</donnee>
+			</indicateur>
+			<indicateur id="3" code="COP_ACM_TMPMAX" locale="N" description="Température Moyenne mensuelle maximale">
+			</indicateur>
+        </sous-categorie>
+    </categorie>
+	<categorie id="2" code="FOG" description="Le froid ou le gel">
+		<sous-categorie id="2" code="COP_SIG" locale="L" description="dddddddddddddddddddddddddd"/>
+	</categorie>
+	<categorie id="3" code="AS" description="Avant la saison"/>
+
+
+</indicateurs>
