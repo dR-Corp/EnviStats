@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-light-success elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link bg-white">
+    <a href="./" class="brand-link bg-white">
         <img src="<?= ASSETS ?>dist/img/log2.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-1"
             style="opacity: 1">
         <span class="brand-text font-weight-bold">EnviStats</span>

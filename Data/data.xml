@@ -9,7 +9,8 @@
 					<valeurs annee="2020">13</valeurs>
 					<valeurs annee="2021">15</valeurs>
 				</donnee>
-			<donnee id="3" frequence="B" zone_reference="zongo" unite_mesure="kg"><valeurs annee="2019">40</valeurs><valeurs annee="2020">20</valeurs><valeurs annee="2021">19</valeurs></donnee><donnee id="3" frequence="D" zone_reference="wore" unite_mesure="kg"><valeurs annee="2019">10</valeurs><valeurs annee="2020">14</valeurs><valeurs annee="2021">9</valeurs></donnee></indicateur>
+			<donnee id="3" frequence="B" zone_reference="zongo" unite_mesure="kg"><valeurs annee="2019">40</valeurs><valeurs annee="2020">20</valeurs><valeurs annee="2021">19</valeurs></donnee>
+			<donnee id="3" frequence="D" zone_reference="wore" unite_mesure="kg"><valeurs annee="2019">10</valeurs><valeurs annee="2020">14</valeurs><valeurs annee="2021">9</valeurs></donnee></indicateur>
 			<indicateur id="2" code="COP_ACM_TMPMIN" locale="N" description="Température moyenne minimale">
 				<donnee id="2" frequence="B" zone_reference="zongo" unite_mesure="kg">
 					<valeurs annee="2019">22</valeurs>
@@ -21,10 +22,4 @@
 			</indicateur>
         </sous-categorie>
     </categorie>
-	<categorie id="2" code="FOG" description="Le froid ou le gel">
-		<sous-categorie id="2" code="COP_SIG" locale="L" description="dddddddddddddddddddddddddd"/>
-	</categorie>
-	<categorie id="3" code="AS" description="Avant la saison"/>
-
-
 </indicateurs>
