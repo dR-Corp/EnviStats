@@ -20,6 +20,6 @@
 			</indicateur>
 			<indicateur id="3" code="COP_ACM_TMPMAX" locale="N" description="Température Moyenne mensuelle maximale">
 			</indicateur>
-        </sous-categorie>
+        <indicateur id="4" code="COP_ACM_VOG" locale="F" description="Une description"><donnee id="3" frequence="D" zone_reference="guema" unite_mesure="kg"><valeurs annee="2019">15</valeurs><valeurs annee="2020">9</valeurs><valeurs annee="2021">12</valeurs></donnee></indicateur></sous-categorie>
     </categorie>
-</indicateurs>
+<categorie id="2" code="SIG" description="aaaaaaaaaaaaaaa"/></indicateurs>

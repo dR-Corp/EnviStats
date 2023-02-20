@@ -37,13 +37,7 @@
         </div>
 
         <?php
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $api_url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);            
-            $indicateurs = curl_exec($ch);
-            $indicateurs = json_decode($indicateurs, true);
-            curl_close($ch);
+            $indicateurs = all("indicateur");
             // echo "<pre>"; print_r($indicateurs); exit;
         ?>
 

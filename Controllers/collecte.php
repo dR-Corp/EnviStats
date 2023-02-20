@@ -68,7 +68,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         else if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $donnee = $xml->xpath("//donnee[@id='$id']")[0];
-            $donnees = array(
+            $donnees = array (
                 'id' => (string) $donnee['id'],
                 'indicateur_id' => (string) $donnee->xpath('ancestor::indicateur')[0]['id'],
                 'indicateur_code' => (string) $donnee->xpath('ancestor::indicateur')[0]['code'],
@@ -86,36 +86,35 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 
     case 'POST':
-        case 'POST':
-            // Ajouter un élément 'donnee' 
-            $indicateur_id = $_POST['indicateur_id'];
-            $frequence = $_POST['frequence'];
-            $zone_reference = $_POST['zone_reference'];
-            $unite_mesure = $_POST['unite_mesure'];
-            $valeurs = array(
-                '2019' => $_POST['valeur_annee_2019'],
-                '2020' => $_POST['valeur_annee_2020'],
-                '2021' => $_POST['valeur_annee_2021']
-            );
+        // Ajouter un élément 'donnee' 
+        $indicateur_id = $_POST['indicateur_id'];
+        $frequence = $_POST['frequence'];
+        $zone_reference = $_POST['zone_reference'];
+        $unite_mesure = $_POST['unite_mesure'];
+        $valeurs = array(
+            '2019' => $_POST['valeur_annee_2019'],
+            '2020' => $_POST['valeur_annee_2020'],
+            '2021' => $_POST['valeur_annee_2021']
+        );
 
-            $listCollectes = $xml->xpath('//donnee[last()]');
-            $lastCollecte = end($listCollectes);
-            $lastCollecteId = (int) $lastCollecte['id'];
-            $id = $lastCollecteId + 1;
+        $listCollectes = $xml->xpath('//donnee[last()]');
+        $lastCollecte = end($listCollectes);
+        $lastCollecteId = (int) $lastCollecte['id'];
+        $id = $lastCollecteId + 1;
 
-            $indicateur = $xml->xpath("//indicateur[@id='$indicateur_id']")[0];
-            $donnee = $indicateur->addChild('donnee');
-            $donnee->addAttribute('id', $id);
-            $donnee->addAttribute('frequence', $frequence);
-            $donnee->addAttribute('zone_reference', $zone_reference);
-            $donnee->addAttribute('unite_mesure', $unite_mesure);
-            foreach ($valeurs as $annee => $valeur) {
-                $donnee->addChild('valeurs', $valeur)->addAttribute('annee', $annee);
-            }
-            $xml->asXML($xmlfile);
-            header('Content-Type: application/json');
-            echo json_encode(array('success' => 'Enregistrement effectué.'));
-            break;
+        $indicateur = $xml->xpath("//indicateur[@id='$indicateur_id']")[0];
+        $donnee = $indicateur->addChild('donnee');
+        $donnee->addAttribute('id', $id);
+        $donnee->addAttribute('frequence', $frequence);
+        $donnee->addAttribute('zone_reference', $zone_reference);
+        $donnee->addAttribute('unite_mesure', $unite_mesure);
+        foreach ($valeurs as $annee => $valeur) {
+            $donnee->addChild('valeurs', $valeur)->addAttribute('annee', $annee);
+        }
+        $xml->asXML($xmlfile);
+        header('Content-Type: application/json');
+        echo json_encode(array('success' => 'Enregistrement effectué.'));
+        break;
 
     case 'PUT':
         // Modifier une catégorie par ID

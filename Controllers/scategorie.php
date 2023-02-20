@@ -29,7 +29,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if (isset($_GET['id'])) {
             $id = (int) $_GET['id'];
             // Récupérer la sous-catégorie correspondante à l'ID
-            $subcategory = $xml->xpath("//sous-categorie[@id='$id']");
+            $sousCategorie = $xml->xpath("//sous-categorie[@id='$id']");
             if (empty($sousCategorie)) {
                 // La sous-catégorie n'existe pas
                 header('Content-Type: application/json');

@@ -1,22 +1,23 @@
 <?php
 
 // Fonction pour envoyer une requête HTTP en utilisant cURL
-function sendRequest($method, $element, $data = null) {
+function sendRequest($method, $element, $data = []) {
     $element != "sous-categorie" ? $element : "scategorie";
-    $url = 'http://localhost/Envistats/Controllers/'.$element.'.php';
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
-    if ($data) {
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    }
-    
-    $response = curl_exec($ch);
-    curl_close($ch);
-    
+    // $params = is_null($data) ? [] 
+    $response = file_get_contents (
+        'http://localhost/Envistats/Controllers/'.$element.'.php', 
+        false, 
+        stream_context_create(array (
+            'http' => array(
+                'method' => $method,
+                'header' => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => http_build_query($data),
+            ),
+        ))
+    );
+
     return $response;
+
 }
 
 // Récupérer toutes les catégories

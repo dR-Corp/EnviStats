@@ -34,13 +34,7 @@
         </div>
 
         <?php
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $api_url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);            
-            $categories = curl_exec($ch);
-            $categories = json_decode($categories, true);
-            curl_close($ch);
+            $categories = all("categorie");
             // echo "<pre>"; print_r($categories); exit;
         ?>
 

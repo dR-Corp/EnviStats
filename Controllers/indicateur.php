@@ -113,17 +113,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
             //Vérification que la sous catégorie parente existe
             $sous_categorie_id = $_POST['sous_categorie_id'];
-            $ous_categorie = $xml->xpath("//sous_categorie[@id='$sous_categorie_id']");
+            $sous_categorie = $xml->xpath("//sous-categorie[@id='$sous_categorie_id']");
             $sous_categorie_code = $sous_categorie[0]['code'];
-            if (empty($categorie)) {
+            if (empty($sous_categorie)) {
                 header('Content-Type: application/json');
                 http_response_code(404);
-                echo json_encode(['error' => "La sous catégorie avec l'ID $categorie_id n'existe pas"]);
+                echo json_encode(['error' => "La sous catégorie avec l'ID $sous_categorie_id n'existe pas"]);
                 exit;
             }
             // Vérification que l'indicateur' n'existe pas déjà
             $code = $_POST['code'];
-            $indicateur = $categorie[0]->xpath("indicateur[@code='$code']");
+            $indicateur = $sous_categorie[0]->xpath("indicateur[@code='$code']");
             if (!empty($indicateur)) {
                 header('Content-Type: application/json');
                 http_response_code(409);
@@ -136,7 +136,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $lastIndicateurId = (int) $lastIndicateur['id'];
             $newIndicateurId = $lastIndicateurId + 1;
             // ajout
-            $newIndicateur = $categorie[0]->addChild('indicateur');
+            $newIndicateur = $sous_categorie[0]->addChild('indicateur');
             $newIndicateur->addAttribute('id', $newIndicateurId);
             $newIndicateur->addAttribute('code', $_POST['code']);
             $newIndicateur->addAttribute('locale', $_POST['locale']);
