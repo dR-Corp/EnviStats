@@ -1,12 +1,5 @@
 <section class="content">
     <div class="container-fluid">
-
-        <?php
-
-            $indicateurs = all("indicateur");
-
-        ?>
-
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <?php
@@ -48,7 +41,7 @@
                 <!-- small box -->
                 <div class="small-box bg-white">
                     <div class="inner">
-                        <h3><?= count($indicateurs) ?></h3>
+                        <h3><?= count(all("indicateur")) ?></h3>
 
                         <p class="font-weight-bold">Indicateurs</p>
                     </div>
@@ -83,8 +76,7 @@
                 <!-- AREA CHART -->
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title">Tendances des valeurs d'indicateurs par zones de référence d'une année à
-                            l'autre</h3>
+                        <h3 class="card-title">Tendances des valeurs d'indicateurs pour une zone de référence spécifique au fil du temps</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -97,10 +89,8 @@
                     </div>
                     <div class="card-body">
                         <div class="chart">
-                            <?php foreach($indicateurs as $indicateur): ?>
-                            <canvas id="areaChart<?= $indicateur['id'] ?>"
-                                style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
-                            <?php endforeach; ?>
+                            <canvas id="areaChart"
+                                style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -108,14 +98,13 @@
                 <!-- /.card -->
 
             </div>
-
+            
             <div class="col-md-12">
 
                 <!-- BAR CHART -->
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title">Comapraison des données de différentes zones de référence pour un
-                            indicateur spécifique</h3>
+                        <h3 class="card-title">Comapraison des données de différentes zones de référence pour un indicateur spécifique</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -128,10 +117,8 @@
                     </div>
                     <div class="card-body">
                         <div class="chart">
-                            <?php foreach($indicateurs as $indicateur): ?>
-                            <canvas id="barChart<?= $indicateur['id'] ?>"
-                                style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
-                            <?php endforeach; ?>
+                            <canvas id="barChart"
+                                style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -171,8 +158,7 @@
                 <!-- RADAR CHART -->
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title">Répartition des valeurs d'indicateurs pour plusieurs zones de référence
-                        </h3>
+                        <h3 class="card-title">Répartition des valeurs d'indicateurs pour plusieurs zones de référence</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -201,9 +187,72 @@
 </section>
 
 <!-- Page specific script -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"></script>
 <script>
 $(function() {
+    /* ChartJS
+     * -------
+     * Here we will create a few charts using ChartJS
+     */
+
+    //--------------
+    //- AREA CHART -
+    //--------------
+
+    // Get context with jQuery - using jQuery's .get() method.
+    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+
+    // var areaChartData = {
+    //     labels: ['2019', '2020', '2021'],
+    //     datasets: [{
+    //             label: 'Banikanni',
+    //             data: [12, 13, 15],
+    //             backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    //             borderColor: 'rgba(255, 99, 132, 1)',
+    //             borderWidth: 1
+    //         },
+    //         {
+    //             label: 'Zongo',
+    //             data: [10, 14, 9],
+    //             backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    //             borderColor: 'rgba(54, 162, 235, 1)',
+    //             borderWidth: 1
+    //         },
+    //         {
+    //             label: 'Wore',
+    //             data: [40, 20, 19],
+    //             backgroundColor: 'rgba(255, 206, 86, 0.2)',
+    //             borderColor: 'rgba(255, 206, 86, 1)',
+    //             borderWidth: 1
+    //         }
+    //     ]
+    // }
+    
+    var areaChartData = {
+        labels: ['2019', '2020', '2021'],
+        datasets: []
+    };
+    var areaChartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: {
+            display: true
+        },
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display: true,
+                }
+            }],
+            yAxes: [{
+                gridLines: {
+                    display: true,
+                },
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
 
     $.ajax({
         type: "GET",
@@ -211,188 +260,81 @@ $(function() {
         dataType: "xml",
         success: function(xml) {
 
-            //chart options
-            var areaChartOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-                legend: {
-                    display: true
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: true,
-                        }
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            display: true,
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            };
-            var barChartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                datasetFill: false,
-                legend: {
-                    display: true
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-            var pieOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-            }
-            var radarOptions = {
-                scale: {
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }
-            }
-
             // Parcourir les indicateurs
             $(xml).find('indicateur').each(function() {
 
                 // Récupérer les données de l'indicateur
                 var label = $(this).parent().attr('code');
                 var code = $(this).attr('code');
-                var id = $(this).attr('id');
-
-                //--------------
-                //- AREA AND BAR CHART -
-                //--------------
-                var areaChartData = {
-                    labels: ['2019', '2020', '2021'],
-                    datasets: []
-                };
+                var data = [];
                 $(this).find('donnee').each(function() {
                     var zone = $(this).attr('zone_reference');
                     var valeurs = [];
                     $(this).find('valeurs').each(function() {
                         valeurs.push(parseInt($(this).text()));
                     });
-                    var col1 = randomColor({
-                        luminosity: 'dark',
-                        format: 'rgba',
-                        alpha: 0.2
-                    });
-                    var col2 = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-                    areaChartData.datasets.push({
+                    data.push({
                         label: zone,
-                        data: valeurs,
-                        backgroundColor: col1,
-                        borderColor: col2,
-                        borderWidth: 3
+                        data: valeurs
                     });
                 });
 
-                if (areaChartData.datasets.length > 0) {
-
-                    var areaChartCanvas = $('#areaChart' + id).get(0).getContext('2d')
-                    var barChartCanvas = $('#barChart' + id).get(0).getContext('2d')
-                    areaChartOptions.title = barChartOptions.title = {
-                        display: true,
-                        text: 'Indicateur ' + code,
-                        fontSize: 20
-                    };
-                    new Chart(areaChartCanvas, {
-                        type: 'line',
-                        data: areaChartData,
-                        options: areaChartOptions
-                    })
-
-                    $.each(areaChartData.datasets, function(index, element) {
-                        element.borderWidth = 0.5
-                    });
-                    var barChartData = $.extend(true, {}, areaChartData)
-                    // var temp0 = areaChartData.datasets[0]
-                    // var temp1 = areaChartData.datasets[1]
-                    // barChartData.datasets[0] = temp1
-                    // barChartData.datasets[1] = temp0
-
-                    new Chart(barChartCanvas, {
-                        type: 'bar',
-                        data: barChartData,
-                        options: barChartOptions
-                    })
-
-                } else {
-                    $('#areaChart' + id).hide();
-                    $('#barChart' + id).hide();
-                }
-
-            });
-
-            //--------------
-            //- RADAR CHART -
-            //--------------
-            // var labels = [];
-            // var datasets = [];
-            var radarData = {
-                labels: [],
-                datasets: []
-            }
-
-            var num = 0;
-            $(xml).find('indicateur').each(function() {
-
-                var label = $(this).attr("code");
-                var data = [];
-
-                if (!radarData.labels.includes(label)) {
-                    radarData.labels.push(label);
-                }
-
-                $(this).find("donnee").each(function() {
-                    var zone = $(this).attr("zone_reference");
-                    var valeur = parseInt(
-                        $(this).find("valeurs").filter(function() {
-                            return $(this).attr("annee") == "2021";
-                        }).text()
-                    );
-                    data.push(valeur);
-                    // if (!radarData.labels.includes(zone)) {
-                    //     radarData.labels.push(zone);
-                    // }
-                });
-
-                radarData.datasets.push({
+                // Ajouter les données à l'objet areaChartData
+                areaChartData.datasets.push({
                     label: label,
                     data: data,
-                    backgroundColor: randomColor({
-                        luminosity: 'dark',
-                        format: 'rgba',
-                        alpha: 0.5
-                    }),
-                    borderColor: '#' + (Math.random() * 0xFFFFFF << 0).toString(16),
-                    borderWidth: 1,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
                 });
-
             });
 
-            console.log("THE NEW WORLD");
-            console.log(radarData);
-
-            var radarChartCanvas = $('#radarChart').get(0).getContext('2d')
-            new Chart(radarChartCanvas, {
-                type: 'radar',
-                data: radarData,
-                options: radarOptions
+            // Afficher le graphique
+            // var ctx = document.getElementById('myChart').getContext('2d');
+            // var myChart = new Chart(ctx, {
+            //     type: 'bar',
+            //     data: areaChartData
+            // });
+            new Chart(areaChartCanvas, {
+                type: 'line',
+                data: areaChartData,
+                options: areaChartOptions
             })
 
         }
-    });
+    });    
+  
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    var temp1 = areaChartData.datasets[1]
+    barChartData.datasets[0] = temp1
+    barChartData.datasets[1] = temp0
+
+    var barChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        datasetFill: false,
+        legend: {
+            display: true
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+
+    new Chart(barChartCanvas, {
+        type: 'bar',
+        data: barChartData,
+        options: barChartOptions
+    })
 
 
     //-------------
@@ -409,7 +351,11 @@ $(function() {
             borderWidth: 1
         }]
     }
-
+    
+    var pieOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+    }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
     new Chart(pieChartCanvas, {
@@ -423,35 +369,45 @@ $(function() {
         labels: ['Température moyenne mensuelle', 'Température moyenne minimale',
             'Température moyenne mensuelle maximale'
         ],
-        datasets: [
-            {
-                label: 'Banikanni',
-                data: [12, 22, 9],
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
+        datasets: [{
+            label: 'Banikanni',
+            data: [12, 22, 9],
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
             }, {
-                label: 'Zongo',
-                data: [4, 19, 42],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+            label: 'Zongo',
+            data: [4, 19, 42],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
             }, {
-                label: 'Wore',
-                data: [14, 20, 35],
-                backgroundColor: 'rgba(255, 206, 86, 0.5)',
-                borderColor: 'rgba(255, 206, 86, 1)',
-                borderWidth: 1
+            label: 'Wore',
+            data: [14, 20, 35],
+            backgroundColor: 'rgba(255, 206, 86, 0.5)',
+            borderColor: 'rgba(255, 206, 86, 1)',
+            borderWidth: 1
             }, {
-                label: 'Guema',
-                data: [41, 12, 28],
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
+            label: 'Guema',
+            data: [41, 12, 28],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    }
+    var radarOptions = {
+        scale: {
+            ticks: {
+                beginAtZero: true
             }
-        ]
+        }
     }
 
+    new Chart(radarChartCanvas, {
+        type: 'radar',
+        data: radarData,
+        options: radarOptions
+    })
 
 })
 </script>
