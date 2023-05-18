@@ -203,6 +203,12 @@
 <!-- Page specific script -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"></script>
 <script>
+
+var areaChartOptions = "";
+var barChartOptions = "";
+var pieOptions = "";
+var radarOptions = "";
+
 $(function() {
 
     $.ajax({
@@ -212,7 +218,7 @@ $(function() {
         success: function(xml) {
 
             //chart options
-            var areaChartOptions = {
+            areaChartOptions = {
                 maintainAspectRatio: false,
                 responsive: true,
                 legend: {
@@ -234,7 +240,8 @@ $(function() {
                     }]
                 }
             };
-            var barChartOptions = {
+
+            barChartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
                 datasetFill: false,
@@ -248,18 +255,20 @@ $(function() {
                         }
                     }]
                 }
-            }
-            var pieOptions = {
+            };
+
+            pieOptions = {
                 maintainAspectRatio: false,
                 responsive: true,
-            }
-            var radarOptions = {
+            };
+
+            radarOptions = {
                 scale: {
                     ticks: {
                         beginAtZero: true
                     }
                 }
-            }
+            };
 
             // Parcourir les indicateurs
             $(xml).find('indicateur').each(function() {
